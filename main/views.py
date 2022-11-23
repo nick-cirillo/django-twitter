@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Tweet
 
 def main_view(request):
-    return render(request, 'main.html' )
+    tweets = Tweet.objects.order_by('created_at')
+    return render(request, 'main.html', {'tweets': tweets})
 
 def splash_view(request):
     return render(request, 'splash.html')
@@ -32,7 +33,3 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('/splash')
-
-def tweet_list(request):
-    tweets = Tweet.objects.order_by('created_at')
-    return render(request, 'templates/main.html', {'tweets': tweets})
